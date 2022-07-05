@@ -52,13 +52,13 @@ queries[0] is green, queries[1] is red, queries[2] is blue, and queries[3] is pu
 
 ### **Python3**
 
-#### **Solution 1**
+#### **Method 1**
 ```python
 class Solution:
     def countPoints(self, points: List[List[int]], queries: List[List[int]]) -> List[int]:
         return [sum(((x0-x1)**2 + (y0-y1)**2) <= r**2 for x1, y1 in points) for x0, y0, r in queries]
 ```
-#### **Solution 2**
+#### **Method 2**
 ```python
 class Solution:
     def countPoints(self, points: List[List[int]], queries: List[List[int]]) -> List[int]:
