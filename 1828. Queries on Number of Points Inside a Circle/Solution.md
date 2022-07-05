@@ -2,42 +2,72 @@
 
 ## Description
 
-You are given an array points where points[i] = [xi, yi] is the coordinates of the ith point on a 2D plane. Multiple points can have the same coordinates.
+<p>You are given an array <code>points</code> where <code>points[i] = [x<sub>i</sub>, y<sub>i</sub>]</code> is the coordinates of the <code>i<sup>th</sup></code> point on a 2D plane. Multiple points can have the <strong>same</strong> coordinates.</p>
 
-You are also given an array queries where queries[j] = [xj, yj, rj] describes a circle centered at (xj, yj) with a radius of rj.
+<p>You are also given an array <code>queries</code> where <code>queries[j] = [x<sub>j</sub>, y<sub>j</sub>, r<sub>j</sub>]</code> describes a circle centered at <code>(x<sub>j</sub>, y<sub>j</sub>)</code> with a radius of <code>r<sub>j</sub></code>.</p>
 
-For each query queries[j], compute the number of points inside the jth circle. Points on the border of the circle are considered inside.
+<p>For each query <code>queries[j]</code>, compute the number of points <strong>inside</strong> the <code>j<sup>th</sup></code> circle. Points <strong>on the border</strong> of the circle are considered <strong>inside</strong>.</p>
 
-Return an array answer, where answer[j] is the answer to the jth query.
+<p>Return <em>an array </em><code>answer</code><em>, where </em><code>answer[j]</code><em> is the answer to the </em><code>j<sup>th</sup></code><em> query</em>.</p>
 
- 
-
-Example 1:
-
-
-Input: points = [[1,3],[3,3],[5,3],[2,2]], queries = [[2,3,1],[4,3,1],[1,1,2]]
-Output: [3,2,2]
-Explanation: The points and circles are shown above.
+<p>&nbsp;</p>
+<p><strong>Example 1:</strong></p>
+<img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1800-1899/1828.Queries%20on%20Number%20of%20Points%20Inside%20a%20Circle/images/chrome_2021-03-25_22-34-16.png" style="width: 500px; height: 418px;" />
+<pre>
+<strong>Input:</strong> points = [[1,3],[3,3],[5,3],[2,2]], queries = [[2,3,1],[4,3,1],[1,1,2]]
+<strong>Output:</strong> [3,2,2]
+<b>Explanation: </b>The points and circles are shown above.
 queries[0] is the green circle, queries[1] is the red circle, and queries[2] is the blue circle.
-Example 2:
+</pre>
 
-
-Input: points = [[1,1],[2,2],[3,3],[4,4],[5,5]], queries = [[1,2,2],[2,2,2],[4,3,2],[4,3,3]]
-Output: [2,3,2,4]
-Explanation: The points and circles are shown above.
+<p><strong>Example 2:</strong></p>
+<img alt="" src="https://fastly.jsdelivr.net/gh/doocs/leetcode@main/solution/1800-1899/1828.Queries%20on%20Number%20of%20Points%20Inside%20a%20Circle/images/chrome_2021-03-25_22-42-07.png" style="width: 500px; height: 390px;" />
+<pre>
+<strong>Input:</strong> points = [[1,1],[2,2],[3,3],[4,4],[5,5]], queries = [[1,2,2],[2,2,2],[4,3,2],[4,3,3]]
+<strong>Output:</strong> [2,3,2,4]
+<b>Explanation: </b>The points and circles are shown above.
 queries[0] is green, queries[1] is red, queries[2] is blue, and queries[3] is purple.
- 
+</pre>
 
-Constraints:
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
 
-1 <= points.length <= 500
-points[i].length == 2
-0 <= x​​​​​​i, y​​​​​​i <= 500
-1 <= queries.length <= 500
-queries[j].length == 3
-0 <= xj, yj <= 500
-1 <= rj <= 500
-All coordinates are integers.
- 
+<ul>
+	<li><code>1 &lt;= points.length &lt;= 500</code></li>
+	<li><code>points[i].length == 2</code></li>
+	<li><code>0 &lt;= x<sub>​​​​​​i</sub>, y<sub>​​​​​​i</sub> &lt;= 500</code></li>
+	<li><code>1 &lt;= queries.length &lt;= 500</code></li>
+	<li><code>queries[j].length == 3</code></li>
+	<li><code>0 &lt;= x<sub>j</sub>, y<sub>j</sub> &lt;= 500</code></li>
+	<li><code>1 &lt;= r<sub>j</sub> &lt;= 500</code></li>
+	<li>All coordinates are integers.</li>
+</ul>
 
-Follow up: Could you find the answer for each query in better complexity than O(n)?
+<p>&nbsp;</p>
+<p><strong>Follow up:</strong> Could you find the answer for each query in better complexity than <code>O(n)</code>?</p>
+
+## Solutions
+
+<!-- tabs:start -->
+
+### **Python3**
+
+#### **Solution 1**
+```python
+class Solution:
+    def countPoints(self, points: List[List[int]], queries: List[List[int]]) -> List[int]:
+        return [sum(((x0-x1)**2 + (y0-y1)**2) <= r**2 for x1, y1 in points) for x0, y0, r in queries]
+```
+#### **Solution 2**
+```python
+class Solution:
+    def countPoints(self, points: List[List[int]], queries: List[List[int]]) -> List[int]:
+        ans=[]
+        for i in range (len(queries)):
+            count=0
+            for j in range (len(points)):
+                if (((points[j][0] - queries[i][0])**2) + ((points[j][1] - queries[i][1])**2) <= (queries[i][2]**2)):
+                    count+=1
+            ans.append(count)
+        return ans
+```
